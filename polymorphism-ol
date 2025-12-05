@@ -1,0 +1,42 @@
+# Overloading-style example (simulate overloading with default args / *args)
+
+class Person:
+    def __init__(self, name, age=None, gender=None):
+        self.name = name
+        self.age = age
+        self.gender = gender
+
+    # "overloaded" info: acts differently based on arguments passed
+    def info(self, *args, **kwargs):
+        # No args -> show minimal
+        if not args and not kwargs:
+            print(f"Person: {self.name}")
+            return
+
+        # If asked for full -> show all stored fields
+        if kwargs.get("full"):
+            print(f"Person: {self.name}, Age: {self.age}, Gender: {self.gender}")
+            return
+
+        # If provided ad-hoc values
+        if args:
+            # example: info("age") or info("age", "gender")
+            fields = []
+            for a in args:
+                if a == "age":
+                    fields.append(f"Age: {self.age}")
+                if a == "gender":
+                    fields.append(f"Gender: {self.gender}")
+            print(f"Person: {self.name}", ", ".join(fields))
+            return
+
+        # fallback
+        print(f"Person: {self.name}")
+
+# Demo
+p = Person("Meena", 45, "Female")
+print("\n=== Overloading-style demo ===")
+p.info()                      # minimal
+p.info("age")                 # show age
+p.info("age", "gender")       # show age + gender
+p.info(full=True)             # full info via keyword

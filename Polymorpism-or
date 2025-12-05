@@ -1,0 +1,52 @@
+# Overriding example (runtime polymorphism)
+
+class Person:
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.gender = gender
+
+    def info(self):
+        print(f"Person: {self.name}, {self.age}, {self.gender}")
+
+
+class Employee(Person):
+    def __init__(self, name, age, gender, empid, salary):
+        super().__init__(name, age, gender)
+        self.empid = empid
+        self.salary = salary
+
+    # override info() to include employee details
+    def info(self):
+        print(f"Employee: {self.name}, ID: {self.empid}, Salary: {self.salary}")
+
+
+class FullTime(Employee):
+    def __init__(self, name, age, gender, empid, salary, work_experience):
+        super().__init__(name, age, gender, empid, salary)
+        self.work_experience = work_experience
+
+    def info(self):
+        print(f"FullTime: {self.name}, Exp: {self.work_experience}, Salary: {self.salary}")
+
+
+class Contractual(Employee):
+    def __init__(self, name, age, gender, empid, salary, contract_expiry):
+        super().__init__(name, age, gender, empid, salary)
+        self.contract_expiry = contract_expiry
+
+    def info(self):
+        print(f"Contract: {self.name}, Expiry: {self.contract_expiry}, Salary: {self.salary}")
+
+
+# Demo
+objs = [
+    Person("Meena", 45, "Female"),
+    Employee("Arun", 30, "Male", "E101", 40000),
+    FullTime("Dhanush", 24, "Male", "FT001", 55000, "5 years"),
+    Contractual("DK", 25, "Male", "CT101", 30000, "2026-06-30"),
+]
+
+print("=== Overriding demo ===")
+for o in objs:
+    o.info()   # runtime polymorphism: same call (.info()) runs different method versions
